@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  TODO: replace https://mehboobmasih.com with your real production domain
+  (e.g. https://<project>.pages.dev), then uncomment the Sitemap line in
+  public/robots.txt.
+
+  This site is a single page with in-page anchors, so only the root URL is
+  listed — sitemaps should not contain fragment (#) URLs as separate entries.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://mehboobmasih.com/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+

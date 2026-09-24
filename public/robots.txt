@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Uncomment and set your production domain after deploying to Cloudflare Pages.
+# Sitemap: https://mehboobmasih.com/sitemap.xml
