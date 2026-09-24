@@ -1,4 +1,4 @@
-import { Brain, Code2, Database, Megaphone, Wrench } from 'lucide-react';
+import { Brain, Code2, Database, Layers, Megaphone, Wrench } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { skillGroups } from '../data/skills';
 import type { SkillGroup } from '../data/skills';
@@ -12,6 +12,7 @@ const icons: Record<SkillGroup['id'], LucideIcon> = {
   'ai-automation': Brain,
   devops: Wrench,
   marketing: Megaphone,
+  other: Layers,
 };
 
 export default function Skills() {

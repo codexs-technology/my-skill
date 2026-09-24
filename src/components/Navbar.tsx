@@ -3,6 +3,7 @@ import { Menu, X } from 'lucide-react';
 import { navIds, navItems } from '../data/nav';
 import { profile } from '../data/profile';
 import { useActiveSection, useScrolled } from '../hooks/useActiveSection';
+import Container from './Container';
 import ThemeToggle from './ThemeToggle';
 
 export default function Navbar() {
@@ -31,7 +32,11 @@ export default function Navbar() {
           : 'border-b border-transparent bg-transparent',
       ].join(' ')}
     >
-      <nav aria-label="Main navigation" className="container-x flex h-16 items-center justify-between gap-3 sm:h-[4.5rem]">
+      <Container
+        as="nav"
+        aria-label="Main navigation"
+        className="flex h-16 items-center justify-between gap-3 sm:h-[4.5rem]"
+      >
         <a
           href="#home"
           onClick={closeMenu}
@@ -84,14 +89,14 @@ export default function Navbar() {
             {menuOpen ? <X size={18} aria-hidden="true" /> : <Menu size={18} aria-hidden="true" />}
           </button>
         </div>
-      </nav>
+      </Container>
 
       <div
         id="mobile-menu"
         hidden={!menuOpen}
         className="border-t border-slate-200/70 bg-white/95 backdrop-blur-lg lg:hidden dark:border-white/10 dark:bg-ink-900/95"
       >
-        <ul className="container-x flex flex-col gap-1 py-4">
+        <Container as="ul" className="flex flex-col gap-1 py-4">
           {navItems.map((item) => (
             <li key={item.id}>
               <a
@@ -113,7 +118,7 @@ export default function Navbar() {
               Start a project
             </a>
           </li>
-        </ul>
+        </Container>
       </div>
     </header>
   );

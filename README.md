@@ -50,6 +50,7 @@ alive.
 | `npm run build` | Type-check + production build into `dist/` |
 | `npm run preview` | Preview the production build locally |
 | `npm run smoke` | Renders the real App through Vite's SSR loader and asserts every section, project and SEO tag is present |
+| `npm run layout` | Drives headless Chrome/Edge over the DevTools protocol: checks for horizontal scrolling at 375/768/1024/1440, verifies all gutters line up, and exercises the marquee, arrows, drag and lightbox. Writes screenshots to `.layout-shots/` (needs Chrome or Edge installed) |
 | `npm run placeholders` | Regenerate the placeholder project images, `og-image.png` and the placeholder resume PDF |
 
 ---
@@ -104,6 +105,26 @@ Everything visible lives in `src/data/`. Add a project by appending an object to
 
 The grid, the "All / Client work / Own products" filters and the tag chips all adapt
 automatically.
+
+## Layout, carousel and the shared `Container`
+
+- **One gutter for the whole page.** `src/components/Container.tsx`
+  (`mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8`) is used by the navbar, the hero, every section and
+  the footer, so their left/right edges line up exactly at every width. Sections go through `Section`,
+  which wraps `Container` — avoid adding ad-hoc `max-w-*` / `px-*` to individual sections.
+- **Consistent rhythm.** Every section uses the shared `.section` class (`py-20 md:py-28`) plus the
+  centred `SectionHeading`, so vertical spacing and heading alignment stay uniform.
+- **Projects reel.** `src/components/ProjectsCarousel.tsx` renders a seamless CSS-keyframe marquee
+  (the card list is rendered twice; `translateX(0 → -50%)` is exactly one copy, so the loop never
+  jumps):
+  - pauses on hover, keyboard focus and touch, and resumes automatically;
+  - can be dragged/swiped, or moved with the previous/next arrows; `←`/`→` work when it has focus;
+  - with `prefers-reduced-motion: reduce` the animation is skipped entirely and the reel becomes a
+    normal horizontal scroller;
+  - if a filter leaves fewer than 4 projects, they render as a static centred grid;
+  - clicking a card image opens `Lightbox` — close it with the X, `Esc` or a backdrop click.
+- After changing layout, run `npm run layout`: it fails if anything introduces horizontal scrolling
+  or breaks the gutter alignment.
 
 ---
 
@@ -199,7 +220,7 @@ npm run preview        # optional sanity check of dist/
 
 | # | Placeholder | Where | What to do |
 | --- | --- | --- | --- |
-| 1 | Project screenshots (`public/projects/*.png`, 8 files) | `src/data/projects.ts` → `image` | Drop real screenshots in at ~1200×750, same filenames. Update `imageAlt` if needed. See `public/projects/README.md`. |
+| 1 | Project screenshots (`public/projects/*.png`, 8 files) | `src/data/projects.ts` → `image` | Drop your real screenshots in with the same filenames — any dimensions work, cards crop to 16:10 from the top (`object-cover object-top`), so website screenshots keep their header visible. Update `imageAlt` if needed. See `public/projects/README.md`. |
 | 2 | Codex Technology start year (`20XX`) | `src/data/experience.ts` → `FOUNDER_START_YEAR` | Set the real founding year. |
 | 3 | Web3Forms access key | `.env` (local) + Cloudflare Pages env vars | Create a free key at web3forms.com. |
 | 4 | Resume PDF | `public/Mehboob_Masih_Resume.pdf` | Overwrite the generated placeholder with your real PDF (keep the filename). |

@@ -2,6 +2,7 @@ import { ArrowUp, Github, Mail, MessageCircle, Phone } from 'lucide-react';
 import { navItems } from '../data/nav';
 import { profile } from '../data/profile';
 import { services } from '../data/services';
+import Container from './Container';
 
 const socials = [
   { href: `mailto:${profile.email}`, label: 'Email Mehboob Masih', icon: Mail },
@@ -15,7 +16,7 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-slate-200 bg-white/60 dark:border-white/10 dark:bg-ink-950/60">
-      <div className="container-x py-14">
+      <Container className="py-14">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <a href="#home" className="flex items-center gap-2.5">
@@ -103,7 +104,7 @@ export default function Footer() {
             </a>
           </div>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }

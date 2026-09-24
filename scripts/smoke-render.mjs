@@ -139,6 +139,49 @@ try {
     if (!html.includes(project.imageAlt)) failures.push(`missing alt text: ${project.imageAlt}`);
   }
 
+  // ── Layout: every section must use the exact same container gutters ──────
+  const containerClass = 'mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8';
+  const containerCount = html.split(containerClass).length - 1;
+  if (containerCount < 9) {
+    failures.push(
+      `expected the shared Container in navbar + hero + 6 sections + footer (9), found ${containerCount}`,
+    );
+  }
+  notes.push(`${containerCount} shared <Container> gutters (navbar, hero, sections, footer)`);
+
+  // ── Projects carousel ────────────────────────────────────────────────────
+  if (!html.includes('marquee-track')) failures.push('marquee track class missing');
+  if (!html.includes('to-transparent')) failures.push('carousel edge fade masks missing');
+  if (!html.includes('aria-label="Previous projects"')) failures.push('prev arrow button missing');
+  if (!html.includes('aria-label="Next projects"')) failures.push('next arrow button missing');
+  if (html.includes('aria-modal="true"')) failures.push('lightbox should be closed on load');
+
+  const renderedCopies = html.split('/projects/lehigh-valley-roofers.png').length - 1;
+  if (renderedCopies !== 2) {
+    failures.push(`marquee must render exactly 2 copies of the reel, found ${renderedCopies}`);
+  }
+
+  if (html.includes('Project images are placeholders')) {
+    failures.push('the removed placeholder notice is still rendered');
+  }
+
+  const mirroredHidden = (html.match(/aria-hidden="true"/g) ?? []).length;
+  if (mirroredHidden < 1) failures.push('mirrored marquee copy is not aria-hidden');
+  notes.push(`marquee renders 2 copies of ${projects.length} cards (2nd copy aria-hidden)`);
+
+  // ── New skills card ─────────────────────────────────────────────────────
+  const { skillGroups } = await vite.ssrLoadModule('/src/data/skills.ts');
+  if (skillGroups.length !== 6) failures.push(`expected 6 skill groups, found ${skillGroups.length}`);
+  for (const needed of ['SaaS Development', 'CRM/ERP concepts', 'Responsive UI', 'Figma collaboration', 'E-commerce']) {
+    if (!html.includes(needed)) failures.push(`missing "Other" skill: ${needed}`);
+  }
+  notes.push(`${skillGroups.length} skill groups (incl. "Other")`);
+
+  // ── Resume link ─────────────────────────────────────────────────────────
+  const resumeLinks = (html.match(/href="\/Mehboob_Masih_Resume\.pdf"/g) ?? []).length;
+  if (resumeLinks < 2) failures.push(`expected resume link in hero and footer, found ${resumeLinks}`);
+  notes.push(`${resumeLinks} resume download links`);
+
   // Static HTML shell (SEO tags) is not part of the React tree.
   const indexHtml = await readFile(join(ROOT, 'index.html'), 'utf8');
   for (const needle of INDEX_HTML_CHECKS) {

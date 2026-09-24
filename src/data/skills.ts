@@ -1,6 +1,6 @@
 export type SkillGroup = {
   /** Matches an icon lookup key in Skills.tsx */
-  id: 'development' | 'databases' | 'ai-automation' | 'devops' | 'marketing';
+  id: 'development' | 'databases' | 'ai-automation' | 'devops' | 'marketing' | 'other';
   title: string;
   items: string[];
 };
@@ -52,6 +52,17 @@ export const skillGroups: SkillGroup[] = [
       'Social Media Marketing',
       'Lead Generation',
       'Landing Pages',
+    ],
+  },
+  {
+    id: 'other',
+    title: 'Other',
+    items: [
+      'SaaS Development',
+      'CRM/ERP concepts',
+      'Responsive UI',
+      'Figma collaboration',
+      'E-commerce',
     ],
   },
 ];

@@ -45,3 +45,7 @@ coverage
 
 # Editor tooling state
 .kilo
+
+# Layout check artefacts (browser profile + screenshots)
+.chrome-profile
+.layout-shots

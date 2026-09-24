@@ -15,10 +15,10 @@ export default function Experience() {
       />
 
       <ol className="relative mt-14 space-y-8 border-l border-slate-200 pl-6 sm:pl-8 dark:border-white/10">
-        {/* Gradient accent over the timeline rail */}
+        {/* Accent overlay that fades down the grey rail */}
         <span
           aria-hidden="true"
-          className="absolute -left-px top-0 h-40 w-0.5 bg-accent-gradient"
+          className="absolute -left-px inset-y-0 w-0.5 rounded-full bg-gradient-to-b from-indigo-500 via-indigo-500/40 to-transparent"
         />
 
         {experience.map((item, index) => {
@@ -28,7 +28,7 @@ export default function Experience() {
               <span
                 aria-hidden="true"
                 className={[
-                  'absolute -left-6 top-1.5 grid h-5 w-5 -translate-x-1/2 place-items-center rounded-full sm:-left-8',
+                  'absolute -left-6 top-6 grid h-5 w-5 -translate-x-1/2 place-items-center rounded-full sm:-left-8',
                   item.current
                     ? 'bg-accent-gradient text-white shadow-glow'
                     : 'border border-slate-300 bg-white text-slate-500 dark:border-white/20 dark:bg-ink-800 dark:text-slate-400',

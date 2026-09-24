@@ -9,6 +9,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "smoke": "node scripts/smoke-render.mjs",
+    "layout": "node scripts/check-layout.mjs",
     "placeholders": "node scripts/generate-placeholders.mjs"
   },
   "dependencies": {

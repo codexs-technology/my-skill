@@ -14,6 +14,8 @@
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    /* Belt and braces against horizontal scrollbars caused by decorative blurs. */
+    overflow-x: hidden;
   }
 
   /* Respect users who ask for less motion */
@@ -33,6 +35,7 @@
 
   body {
     @apply bg-slate-50 font-sans text-slate-700 antialiased dark:bg-ink-900 dark:text-slate-300;
+    overflow-x: hidden;
   }
 
   h1,
@@ -62,12 +65,8 @@
 }
 
 @layer components {
-  .container-x {
-    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
-  }
-
   .section {
-    @apply scroll-mt-20 py-20 sm:py-24;
+    @apply scroll-mt-20 py-20 md:py-28;
   }
 
   .gradient-text {
@@ -137,5 +136,41 @@
   .nav-link-active::after {
     content: '';
     @apply absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-accent-gradient;
+  }
+}
+
+/* ─────────────────────────── Projects marquee ─────────────────────────── */
+
+/* Track holds two identical copies of the card list; -50% is exactly one copy,
+   so the loop restarts with no visible seam. */
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@layer components {
+  .marquee-track {
+    animation: marquee-scroll var(--marquee-duration, 60s) linear infinite;
+    animation-play-state: var(--marquee-state, running);
+    will-change: transform;
+  }
+
+  /* Slim scrollbar for the manual (reduced-motion) horizontal scroller. */
+  .scroll-strip {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 116, 139, 0.45) transparent;
+  }
+
+  .scroll-strip::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .scroll-strip::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-slate-400/50;
   }
 }

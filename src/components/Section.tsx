@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import Container from './Container';
 
 type SectionProps = {
   id: string;
@@ -15,7 +16,7 @@ export default function Section({ id, children, className, labelledBy }: Section
       aria-labelledby={labelledBy}
       className={['section', className].filter(Boolean).join(' ')}
     >
-      <div className="container-x">{children}</div>
+      <Container>{children}</Container>
     </section>
   );
 }
